@@ -1,8 +1,7 @@
-package com.example.onlyfriends.services
+package com.example.onlyfriends.services.security
 
 import com.example.onlyfriends.utils.JwtTokenUtil
 import jakarta.servlet.FilterChain
-import jakarta.servlet.ServletException
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpHeaders.AUTHORIZATION
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-import java.io.IOException
 
 class JwtAuthorizationFilter(
     private val jwtTokenUtil: JwtTokenUtil,
@@ -19,15 +17,13 @@ class JwtAuthorizationFilter(
     authManager: AuthenticationManager,
     ) : BasicAuthenticationFilter(authManager) {
 
-    @Throws(IOException::class, ServletException::class)
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
+    override fun doFilterInternal(request: HttpServletRequest,
+                                  response: HttpServletResponse,
+                                  chain: FilterChain) {
         val header = request.getHeader(AUTHORIZATION)
-        if (header == null || !header.startsWith("Bearer ")) {
-            chain.doFilter(request, response)
-            return
-        }
-        getAuthentication(header.substring(7))?.also {
-            SecurityContextHolder.getContext().authentication = it
+        if (header != null && header.startsWith("Bearer ")) {
+            getAuthentication(header.substring(7))
+                ?.also { SecurityContextHolder.getContext().authentication = it }
         }
         chain.doFilter(request, response)
     }

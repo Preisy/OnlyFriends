@@ -10,11 +10,11 @@ spring:
     url: jdbc:mariadb://localhost:3306/OnlyFriends
     driver-class-name: org.mariadb.jdbc.Driver
 
-jpa:
-  generate-ddl: true
-  properties:
-    hibernate:
-      ddl-auto: create
-      show_sql: true
-      dialect: org.hibernate.dialect.MariaDB103Dialect
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        ddl-auto: create
+        show_sql: true
+        dialect: org.hibernate.dialect.MariaDB103Dialect
 

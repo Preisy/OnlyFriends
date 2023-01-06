@@ -1,4 +1,4 @@
-package com.example.onlyfriends.services
+package com.example.onlyfriends.services.security
 
 import com.example.onlyfriends.model.security.UserSecurity
 import com.example.onlyfriends.repositories.UserDao

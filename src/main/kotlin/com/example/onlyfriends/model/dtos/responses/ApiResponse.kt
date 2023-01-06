@@ -1,11 +1,11 @@
-package com.example.onlyfriends.model.dtos.messages
+package com.example.onlyfriends.model.dtos.responses
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
-abstract class AbstractApiMessage (
-    val status: HttpStatus,
+interface ApiResponse {
+    val status: HttpStatus
     val message: String
-) {
+
     fun asResponse() = ResponseEntity.status(status).body(this)
 }

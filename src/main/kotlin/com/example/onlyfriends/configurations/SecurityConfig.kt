@@ -1,7 +1,7 @@
 package com.example.onlyfriends.configurations
 
-import com.example.onlyfriends.services.JwtAuthenticationFilter
-import com.example.onlyfriends.services.JwtAuthorizationFilter
+import com.example.onlyfriends.services.security.JwtAuthenticationFilter
+import com.example.onlyfriends.services.security.JwtAuthorizationFilter
 import com.example.onlyfriends.utils.JwtTokenUtil
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

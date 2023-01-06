@@ -1,7 +1,7 @@
-package com.example.onlyfriends.services
+package com.example.onlyfriends.services.security
 
 import com.example.onlyfriends.utils.JwtTokenUtil
-import com.example.onlyfriends.model.dtos.LoginDto
+import com.example.onlyfriends.model.dtos.requests.LoginDto
 import com.example.onlyfriends.model.security.UserSecurity
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import java.util.*
 
 class JwtAuthenticationFilter (
     private val jwtTokenUtil: JwtTokenUtil,
@@ -23,10 +22,9 @@ class JwtAuthenticationFilter (
                                        response: HttpServletResponse): Authentication {
         val credentials =
             ObjectMapper().readValue(request.inputStream, LoginDto::class.java)
-        val auth = credentials.run {
+        return authenticationManager.authenticate(credentials.run {
             UsernamePasswordAuthenticationToken(login, password)
-        }
-        return authenticationManager.authenticate(auth)
+        })
     }
 
     override fun successfulAuthentication(
@@ -46,20 +44,10 @@ class JwtAuthenticationFilter (
         response: HttpServletResponse,
         failed: AuthenticationException
     ) {
-        val error = BadCredentialsError()
-        response.status = error.status
+        response.status = 401
         response.contentType = "application/json"
-        response.writer.append(error.toString())
-    }
-
-    private data class BadCredentialsError(
-        val timestamp: Long = Date().time,
-        val status: Int = 401,
-        val message: String = "Email or password incorrect",
-    ) {
-        override fun toString(): String {
-            return ObjectMapper().writeValueAsString(this)
-        }
+        response.writer.append(ObjectMapper()
+            .writeValueAsString(mapOf("message" to "Email or password incorrect")))
     }
 }
 
