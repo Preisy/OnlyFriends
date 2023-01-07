@@ -3,7 +3,6 @@ package com.example.onlyfriends.model.table
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.ManyToOne
-import java.sql.Timestamp
 import java.time.LocalDateTime
 
 @Entity
@@ -16,5 +15,4 @@ class UsersPost(
 
     @Column(nullable = false)
     var dateTime: LocalDateTime = LocalDateTime.now(),
-
     ) : AbstractEntity()

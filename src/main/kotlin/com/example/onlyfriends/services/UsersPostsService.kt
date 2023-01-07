@@ -1,6 +1,5 @@
 package com.example.onlyfriends.services
 
-import com.example.onlyfriends.model.dtos.requests.DateDto
 import com.example.onlyfriends.model.dtos.requests.PostDto
 import com.example.onlyfriends.model.dtos.responses.exceptions.NoPosts
 import com.example.onlyfriends.model.table.UsersPost
