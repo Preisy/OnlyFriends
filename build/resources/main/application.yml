@@ -14,7 +14,7 @@ spring:
     generate-ddl: true
     properties:
       hibernate:
-        ddl-auto: create
+        ddl-auto: update
         show_sql: true
         dialect: org.hibernate.dialect.MariaDB103Dialect
 

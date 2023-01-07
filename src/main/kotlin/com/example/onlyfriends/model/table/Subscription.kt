@@ -7,8 +7,8 @@ import jakarta.persistence.OneToOne
 @Entity
 class Subscription (
     @OneToOne
-    var author: User,
+    val author: User,
 
     @ManyToOne
-    var subscriber: User
+    val subscriber: User
 ): AbstractEntity()

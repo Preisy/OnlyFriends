@@ -14,4 +14,9 @@ interface UsersPostDao : CrudRepository<UsersPost, Long> {
     fun findFirstByUserAndDateTimeBeforeOrderByDateTimeDesc(user: User, date: LocalDateTime): UsersPost?
     fun findFirstByUserAndDateTimeAfterOrderByDateTime(user: User, date: LocalDateTime): UsersPost?
 
+    fun findFirstByUserInOrderByDateTimeDesc(users: List<User>): UsersPost?
+    fun findFirstByUserInAndDateTimeAfterOrderByDateTime(users: List<User>, date: LocalDateTime): UsersPost?
+    fun findFirstByUserInAndDateTimeBeforeOrderByDateTimeDesc(users: List<User>, date: LocalDateTime): UsersPost?
+
+
 }

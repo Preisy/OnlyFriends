@@ -11,8 +11,8 @@ class UsersPost(
     var text: String,
 
     @ManyToOne
-    var user: User,
+    val user: User,
 
     @Column(nullable = false)
-    var dateTime: LocalDateTime = LocalDateTime.now(),
+    val dateTime: LocalDateTime = LocalDateTime.now(),
     ) : AbstractEntity()
