@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mariadb://localhost:3306/OnlyFriendsDb
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        ddl-auto: update
+        show_sql: true
+        dialect: org.hibernate.dialect.MariaDB103Dialect
