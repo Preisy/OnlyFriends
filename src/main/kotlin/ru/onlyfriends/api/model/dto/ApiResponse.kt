@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 interface ApiResponse {
     val status: HttpStatus
     val message: String
+
     @get:JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     val timestamp: LocalDateTime
 
