@@ -1,6 +1,7 @@
 package ru.onlyfriends.api.service.userService
 
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import ru.onlyfriends.api.model.dto.exception.ResourceNotFoundException
 import ru.onlyfriends.api.model.dto.request.UserRequest
@@ -10,24 +11,23 @@ import ru.onlyfriends.api.service.CrudServiceImpl
 
 @Service
 class UserServiceImpl(
-    override val repository: UserRepository
+    override val repository: UserRepository,
+    private val passwordEncoder: BCryptPasswordEncoder
 ) : UserService, CrudServiceImpl<UserRequest, User, Long, UserRepository>(
     User::class.simpleName
 ) {
-    override fun findByLogin(login: String): User = repository.findByLogin(login).orElseThrow {
+    override fun create(request: UserRequest): User {
+        val model = request.asModel()
+        model.uPassword = passwordEncoder.encode(request.password)
+        return repository.save(model)
+    }
+
+
+    override fun findByLogin(login: String): User = repository.findByEmail(login).orElseThrow {
         ResourceNotFoundException(modelSimpleName!!)
     }
 
     override fun loadUserByUsername(login: String): UserDetails {
-        val u: User = findByLogin(login)
-        return org.springframework.security.core.userdetails.User(
-            u.login,
-            u.password,
-            true,
-            true,
-            true,
-            true,
-            HashSet()
-        )
+        return findByLogin(login)
     }
 }

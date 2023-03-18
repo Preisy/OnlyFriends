@@ -7,4 +7,6 @@ import ru.onlyfriends.api.service.CrudService
 
 interface UserService : CrudService<UserRequest, User, Long>, UserDetailsService {
     fun findByLogin(login: String): User
+
+//    fun login(login: String)
 }

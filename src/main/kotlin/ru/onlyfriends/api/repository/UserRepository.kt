@@ -7,5 +7,5 @@ import java.util.*
 
 @Repository
 interface UserRepository : CrudRepository<User, Long> {
-    fun findByLogin(login: String): Optional<User>
+    fun findByEmail(email: String): Optional<User>
 }
