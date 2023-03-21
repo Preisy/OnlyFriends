@@ -8,8 +8,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import ru.onlyfriends.api.filter.JwtAuthenticationFilter
 import ru.onlyfriends.api.filter.JwtAuthorizationFilter
+import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
 import ru.onlyfriends.api.utils.JwtTokenUtil
 
 @Configuration
@@ -26,20 +28,29 @@ class SecurityConfig(
         return authenticationManagerBuilder.build()
     }
 
+//    @Bean
+//    fun securityException401EntryPoint(): Http401AuthenticationEntryPoint? {
+//        return Http401AuthenticationEntryPoint("Bearer realm=\"webrealm\"")
+//    }
+
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         val authenticationManager = authManager(http)
         http
-            .csrf().disable()
+            .csrf()
+                .disable()
             .authorizeHttpRequests()
-            .requestMatchers("/health/**", "/login", "/signup").permitAll()
-            .anyRequest().authenticated()
+                .requestMatchers("/health", "/login", "/signup").permitAll()
+                .requestMatchers("/users/**").authenticated()
+                .anyRequest().authenticated()
             .and()
-            .authenticationManager(authenticationManager)
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-            .addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
-            .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsService, authenticationManager))
-
+                .exceptionHandling().authenticationEntryPoint(UnauthorizedException())
+            .and()
+                .authenticationManager(authenticationManager)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
+                .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsService, authenticationManager))
         return http.build()
     }
 

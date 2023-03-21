@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import ru.onlyfriends.api.model.dto.exception.ResourceNotFoundException
 import ru.onlyfriends.api.model.dto.request.UserRequest
 import ru.onlyfriends.api.model.entity.User
-import ru.onlyfriends.api.repository.UserRepository
+import ru.onlyfriends.api.model.repository.UserRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
 
 @Service

@@ -3,6 +3,7 @@ package ru.onlyfriends.api.utils
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Component
+import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
 import java.util.*
 
 @Component
@@ -20,7 +21,11 @@ class JwtTokenUtil {
     fun getEmail(token: String): String = getClaims(token).subject
 
     fun isTokenValid(token: String): Boolean {
-        val claims = getClaims(token)
+        val claims =  try {
+            getClaims(token)
+        } catch (e: Exception) {
+            throw UnauthorizedException()
+        }
         val expirationDate = claims.expiration
         val now = Date(System.currentTimeMillis())
         return now.before(expirationDate)

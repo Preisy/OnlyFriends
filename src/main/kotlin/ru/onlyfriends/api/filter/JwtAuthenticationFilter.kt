@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import ru.onlyfriends.api.model.dto.TokenResponse
 import ru.onlyfriends.api.model.dto.exception.BadCredentialsException
 import ru.onlyfriends.api.model.dto.request.LoginRequest
 import ru.onlyfriends.api.model.entity.User
@@ -40,7 +41,7 @@ class JwtAuthenticationFilter(
     ) {
         val username = (auth.principal as User).username
         val token: String = jwtTokenUtil.generateToken(username)
-        res.writer.append(ObjectMapper().writer().writeValueAsString(token))
+        res.writer.append(ObjectMapper().writer().writeValueAsString(TokenResponse(token)))
         res.addHeader("Authorization", token)
         res.addHeader("Access-Control-Expose-Headers", "Authorization")
     }

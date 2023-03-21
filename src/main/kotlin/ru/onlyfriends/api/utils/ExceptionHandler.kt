@@ -8,6 +8,7 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.exception.AbstractApiException
+import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
 
 
 @RestControllerAdvice
@@ -21,6 +22,15 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         request: WebRequest
     ): ResponseEntity<ApiResponse> {
 //        logger.info(cause.toString())
+        return cause.asResponse()
+    }
+    @ExceptionHandler(value = [UnauthorizedException::class])
+    protected fun handle(
+        cause: UnauthorizedException,
+        request: WebRequest
+    ): ResponseEntity<ApiResponse> {
+//        logger.info(cause.toString())
+        print("adsgf")
         return cause.asResponse()
     }
 
