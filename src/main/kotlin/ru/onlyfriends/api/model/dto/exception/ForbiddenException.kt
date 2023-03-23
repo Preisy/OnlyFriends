@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.model.dto.exception.default
+package ru.onlyfriends.api.model.dto.exception
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.ObjectWriter

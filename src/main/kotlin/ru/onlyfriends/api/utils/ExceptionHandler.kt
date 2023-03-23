@@ -1,6 +1,5 @@
 package ru.onlyfriends.api.utils
 
-import jakarta.servlet.ServletException
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -10,7 +9,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.exception.AbstractApiException
 import ru.onlyfriends.api.model.dto.exception.InternalServerErrorException
-import ru.onlyfriends.api.model.dto.exception.default.ForbiddenException
+import ru.onlyfriends.api.model.dto.exception.ForbiddenException
 import org.springframework.security.access.AccessDeniedException
 
 

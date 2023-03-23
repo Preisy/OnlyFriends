@@ -8,6 +8,8 @@ interface CrudService<Request : ApiRequest, Model : AbstractEntity, Id : Any> {
     fun findAll(): Iterable<Model>
     fun findById(id: Id): Model
 
+    fun delete(id: Id)
+
     // post
     // patch
     // delete

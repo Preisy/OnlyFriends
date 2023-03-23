@@ -6,5 +6,5 @@ import jakarta.persistence.Entity
 @Entity
 class UserRole(
     @Column
-    var role: UserRoleType = UserRoleType.User
+    var role: UserRoleType = UserRoleType.USER
 ) : AbstractEntity()

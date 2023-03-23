@@ -17,7 +17,7 @@ class User(
     var uPassword: String,
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    val roles: MutableSet<UserRole> = mutableSetOf(UserRole(UserRoleType.User))
+    val roles: MutableSet<UserRole> = mutableSetOf(UserRole(UserRoleType.USER))
 ) : AbstractEntity(), UserDetails {
     @JsonIgnore
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {

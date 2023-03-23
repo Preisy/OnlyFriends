@@ -31,7 +31,7 @@ class JwtAuthenticationFilter(
         val auth = UsernamePasswordAuthenticationToken(
             credentials.email,
             credentials.password,
-            Collections.singleton(SimpleGrantedAuthority("ROLE_${UserRoleType.User}"))
+            Collections.singleton(SimpleGrantedAuthority("ROLE_${UserRoleType.USER}"))
         )
         return authenticationManager.authenticate(auth)
     }

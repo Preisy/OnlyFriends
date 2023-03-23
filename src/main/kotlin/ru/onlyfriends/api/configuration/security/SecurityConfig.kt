@@ -2,8 +2,6 @@ package ru.onlyfriends.api.configuration.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
@@ -14,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain
 import ru.onlyfriends.api.filter.JwtAuthenticationFilter
 import ru.onlyfriends.api.filter.JwtAuthorizationFilter
 import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
-import ru.onlyfriends.api.model.dto.exception.default.ForbiddenException
+import ru.onlyfriends.api.model.dto.exception.ForbiddenException
 import ru.onlyfriends.api.utils.JwtTokenUtil
 
 

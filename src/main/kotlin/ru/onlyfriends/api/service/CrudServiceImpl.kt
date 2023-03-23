@@ -23,7 +23,16 @@ abstract class CrudServiceImpl<
 
     override fun findAll(): Iterable<Model> = repository.findAll()
     override fun findById(id: Id): Model = repository.findById(id).orElseThrow {
-        if (modelSimpleName == null) ResourceNotFoundException()
-        else ResourceNotFoundException(modelSimpleName!!)
+        notFoundException()
+    }
+
+    override fun delete(id: Id) {
+        if (!repository.existsById(id)) throw notFoundException()
+        repository.deleteById(id)
+    }
+
+    private fun notFoundException(): ResourceNotFoundException {
+        if (modelSimpleName == null) return ResourceNotFoundException()
+        else return ResourceNotFoundException(modelSimpleName)
     }
 }
