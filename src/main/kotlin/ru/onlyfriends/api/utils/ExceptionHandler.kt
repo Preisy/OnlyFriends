@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.utils
 
+import jakarta.servlet.ServletException
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -9,14 +10,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.exception.AbstractApiException
 import ru.onlyfriends.api.model.dto.exception.InternalServerErrorException
-import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
+import ru.onlyfriends.api.model.dto.exception.default.ForbiddenException
+import org.springframework.security.access.AccessDeniedException
 
 
 @RestControllerAdvice
 class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
     private val logger = LoggerFactory.getLogger(GlobalExceptionHandler::class.java)
 
-    //    @ExceptionHandler(value = [InternalServerError])
     @ExceptionHandler(value = [AbstractApiException::class])
     protected fun handle(
         cause: AbstractApiException,
@@ -25,14 +26,14 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
 //        logger.info(cause.toString())
         return cause.asResponse()
     }
-    @ExceptionHandler(value = [UnauthorizedException::class])
+
+    @ExceptionHandler(value = [AccessDeniedException::class])
     protected fun handle(
-        cause: UnauthorizedException,
+        cause: AccessDeniedException,
         request: WebRequest
     ): ResponseEntity<ApiResponse> {
 //        logger.info(cause.toString())
-        print("adsgf")
-        return cause.asResponse()
+        return ForbiddenException().asResponse()
     }
 
     @ExceptionHandler(value = [Throwable::class])
@@ -43,12 +44,4 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         logger.error(cause.toString())
         return InternalServerErrorException().asResponse()
     }
-
-//    @ExceptionHandler(value = [AuthenticationException::class, MissingCsrfTokenException::class, InvalidCsrfTokenException::class, SessionAuthenticationException::class])
-//    fun handleAuthenticationException(
-//        ex: RuntimeException?,
-//        request: WebRequest
-//    ): ResponseEntity<ApiResponse> {
-//        return UnauthorizedException().asResponse()
-//    }
 }

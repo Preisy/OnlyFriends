@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.onlyfriends.api.model.dto.TokenResponse
 import ru.onlyfriends.api.model.dto.exception.BadCredentialsException
 import ru.onlyfriends.api.model.dto.request.LoginRequest
+import ru.onlyfriends.api.model.entity.UserRoleType
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.utils.JwtTokenUtil
 import java.util.*
@@ -30,7 +31,7 @@ class JwtAuthenticationFilter(
         val auth = UsernamePasswordAuthenticationToken(
             credentials.email,
             credentials.password,
-            Collections.singleton(SimpleGrantedAuthority("user")) // todo убрать нахуй
+            Collections.singleton(SimpleGrantedAuthority("ROLE_${UserRoleType.User}"))
         )
         return authenticationManager.authenticate(auth)
     }
