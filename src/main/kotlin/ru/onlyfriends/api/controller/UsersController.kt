@@ -1,7 +1,6 @@
 package ru.onlyfriends.api.controller
 
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.annotation.Secured
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.model.dto.ApiResponse

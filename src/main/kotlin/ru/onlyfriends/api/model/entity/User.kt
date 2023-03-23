@@ -20,7 +20,7 @@ class User(
         generator = ObjectIdGenerators.PropertyGenerator::class,
         property = "name"
     )
-    @JsonIdentityReference(alwaysAsId=true)
+    @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     val roles: MutableSet<UserRole> = mutableSetOf(UserRole(UserRoleType.USER))
@@ -36,7 +36,7 @@ class User(
         val authorities: MutableList<SimpleGrantedAuthority> = ArrayList()
 
         var j = 0
-        Loop@ for(i in roleHierarchy.indices) {
+        Loop@ for (i in roleHierarchy.indices) {
             for (role in roles) {
                 if (role.name == roleHierarchy[i]) {
                     j = i

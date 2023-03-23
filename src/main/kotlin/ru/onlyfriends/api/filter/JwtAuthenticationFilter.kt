@@ -15,8 +15,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import ru.onlyfriends.api.model.dto.TokenResponse
 import ru.onlyfriends.api.model.dto.exception.BadCredentialsException
 import ru.onlyfriends.api.model.dto.request.LoginRequest
-import ru.onlyfriends.api.model.entity.UserRoleType
 import ru.onlyfriends.api.model.entity.User
+import ru.onlyfriends.api.model.entity.UserRoleType
 import ru.onlyfriends.api.utils.JwtTokenUtil
 import java.util.*
 

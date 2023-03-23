@@ -1,11 +1,7 @@
 package ru.onlyfriends.api.configuration.security
 
-//import org.springframework.security.authorization.AuthorizationManager
-
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler
-import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
@@ -41,23 +37,23 @@ class SecurityConfig(
         val authenticationManager = authManager(http)
         http
             .csrf { customizer -> customizer
-                .disable()
+                    .disable()
             }
             .authorizeHttpRequests { auth -> auth
 //                .dispatcherTypeMatchers()
-                .requestMatchers("/health", "/login", "/signup").permitAll()
-                .requestMatchers("/users").authenticated()
-                .requestMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                    .requestMatchers("/health", "/login", "/signup").permitAll()
+                    .requestMatchers("/users").authenticated()
+                    .requestMatchers("/admin").hasRole("ADMIN")
+                    .anyRequest().authenticated()
 
             }
-            .exceptionHandling {ex -> ex
-                .authenticationEntryPoint(UnauthorizedException())
-                .accessDeniedHandler(ForbiddenException())
+            .exceptionHandling { ex -> ex
+                    .authenticationEntryPoint(UnauthorizedException())
+                    .accessDeniedHandler(ForbiddenException())
             }
             .authenticationManager(authenticationManager)
-            .sessionManagement {session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement { session -> session
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .addFilter(JwtAuthenticationFilter(jwtToken, authenticationManager))
             .addFilter(JwtAuthorizationFilter(jwtToken, userDetailsService, authenticationManager))

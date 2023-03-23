@@ -21,7 +21,7 @@ class JwtTokenUtil {
     fun getEmail(token: String): String = getClaims(token).subject
 
     fun isTokenValid(token: String): Boolean {
-        val claims =  try {
+        val claims = try {
             getClaims(token)
         } catch (e: Exception) {
             throw UnauthorizedException()
