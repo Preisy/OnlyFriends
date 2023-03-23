@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails
 class User(
     @Column(length = 255, nullable = false)
     var email: String,
-    @Column(length = 255, nullable = false)
+    @Column(length = 255, nullable = false, name = "password")
     var uPassword: String
 ) : AbstractEntity(), UserDetails {
     @JsonIgnore

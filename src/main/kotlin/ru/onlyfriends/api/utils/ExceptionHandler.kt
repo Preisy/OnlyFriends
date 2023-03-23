@@ -8,6 +8,7 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.exception.AbstractApiException
+import ru.onlyfriends.api.model.dto.exception.InternalServerErrorException
 import ru.onlyfriends.api.model.dto.exception.UnauthorizedException
 
 
@@ -34,14 +35,14 @@ class GlobalExceptionHandler : ResponseEntityExceptionHandler() {
         return cause.asResponse()
     }
 
-//    @ExceptionHandler(value = [Throwable::class])
-//    protected fun handle(
-//        cause: Throwable,
-//        request: WebRequest
-//    ): ResponseEntity<ApiResponse> {
-//        logger.error(cause.toString())
-//        return InternalServerErrorException().asResponse()
-//    }
+    @ExceptionHandler(value = [Throwable::class])
+    protected fun handle(
+        cause: Throwable,
+        request: WebRequest
+    ): ResponseEntity<ApiResponse> {
+        logger.error(cause.toString())
+        return InternalServerErrorException().asResponse()
+    }
 
 //    @ExceptionHandler(value = [AuthenticationException::class, MissingCsrfTokenException::class, InvalidCsrfTokenException::class, SessionAuthenticationException::class])
 //    fun handleAuthenticationException(
