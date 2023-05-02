@@ -4,12 +4,9 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import ru.onlyfriends.api.model.dto.request.MessageRequest
-import ru.onlyfriends.api.model.dto.request.PostRequest
 import ru.onlyfriends.api.model.entity.Message
-import ru.onlyfriends.api.model.entity.Post
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.repository.MessageRepository
-import ru.onlyfriends.api.model.repository.PostRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
 import ru.onlyfriends.api.service.userService.UserService
 import java.time.LocalDateTime
@@ -28,9 +25,12 @@ class MessageServiceImpl(
         pageSize: Int,
     ): List<Message> {
         val pageable = PageRequest.of(page, pageSize)
-        return repository.findAllByCreatedAtLessThanAndRecipientAndAuthorOrAuthorAndRecipientOrderByCreatedAt(
+        println(beforeDate)
+        return repository.
+            findAllByCreatedAtBeforeAndRecipientAndAuthorOrCreatedAtBeforeAndAuthorAndRecipientOrderByCreatedAtDesc(
             beforeDate,
             user1, user2,
+            beforeDate,
             user1, user2,
             pageable
         )
