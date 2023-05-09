@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.service.userPostService
+package ru.onlyfriends.api.service.postService.userPostService
 
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service

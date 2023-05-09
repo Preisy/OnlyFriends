@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.service.getBloggerPostsService
+package ru.onlyfriends.api.service.postService.getBloggerPostsService
 
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service

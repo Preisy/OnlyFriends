@@ -13,4 +13,6 @@ interface SubscriptionRepository : CrudRepository<Subscription, Long> {
     fun findAllByCreatedAtLessThanAndBloggerOrderByCreatedAt(
         createdAt: LocalDateTime,
         blogger: User) : List<Subscription>
+
+    fun findAllBySubscriber(subscriber: User): List<Subscription>
 }

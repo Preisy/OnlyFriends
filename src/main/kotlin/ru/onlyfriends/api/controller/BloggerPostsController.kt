@@ -1,12 +1,12 @@
 package ru.onlyfriends.api.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.onlyfriends.api.service.getBloggerPostsService.ResponseService.BloggerPostsResponseService
+import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
 @RequestMapping("/posts/users")
 class BloggerPostsController(
-    val service: BloggerPostsResponseService
+    val service: PostsResponseService
 ) {
 //    @GetMapping("/{email}/posts")
     @GetMapping("/{email}")

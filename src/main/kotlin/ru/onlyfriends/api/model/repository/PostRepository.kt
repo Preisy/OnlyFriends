@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.model.repository
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -13,4 +14,10 @@ interface PostRepository : CrudRepository<Post, Long> {
         author: User,
         createdAt: LocalDateTime,
         pageable: Pageable) : List<Post>
+
+    fun findAllByAuthorInAndCreatedAtLessThanOrderByCreatedAt(
+        author: MutableCollection<User>,
+        createdAt: LocalDateTime,
+        of: PageRequest
+    ): List<Post>
 }
