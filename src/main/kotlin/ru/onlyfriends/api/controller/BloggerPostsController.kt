@@ -1,7 +1,7 @@
 package ru.onlyfriends.api.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.onlyfriends.api.service.getBloggerPostsService.BloggerPostsResponseService
+import ru.onlyfriends.api.service.getBloggerPostsService.ResponseService.BloggerPostsResponseService
 
 @RestController
 @RequestMapping("/users")

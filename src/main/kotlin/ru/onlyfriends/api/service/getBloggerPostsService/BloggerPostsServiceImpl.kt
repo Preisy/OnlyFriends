@@ -11,9 +11,9 @@ import java.time.format.DateTimeFormatter
 class BloggerPostsServiceImpl(
     val repository: PostRepository,
     val userRepository: UserRepository
-) {
+) : BloggerPostsService {
 
-    fun getBloggerPosts(email: String, since: String, pageSize: Int) =
+    override fun getBloggerPosts(email: String, since: String, pageSize: Int) =
         repository.findAllByAuthorAndCreatedAtLessThanOrderByCreatedAt(
             userRepository.findByEmail(email).get(),
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
