@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.model.repository
 
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.CrudRepository
 import ru.onlyfriends.api.model.entity.Subscription
 import ru.onlyfriends.api.model.entity.User
@@ -15,4 +16,9 @@ interface SubscriptionRepository : CrudRepository<Subscription, Long> {
         blogger: User) : List<Subscription>
 
     fun findAllBySubscriber(subscriber: User): List<Subscription>
+    fun findAllByBloggerAndCreatedAtLessThanOrderByCreatedAt(
+        blogger: User,
+        createdAt: LocalDateTime,
+        pageable: Pageable
+    ): List<Subscription>
 }

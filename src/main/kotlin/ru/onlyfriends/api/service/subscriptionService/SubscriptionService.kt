@@ -9,4 +9,5 @@ interface SubscriptionService : CrudService<SubscriptionRequest, Subscription, L
     fun unsubscribe(request: SubscriptionRequest): Boolean
     fun countSubscribers(request: SubscriptionRequest): Int
     fun subscribers(request: SubscriptionRequest, since: String, pageSize: Int): List<Subscription>
+    fun subscriptions(since: String, pageSize: Int): List<Subscription>
 }
