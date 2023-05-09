@@ -9,7 +9,7 @@ class BloggerPostsController(
     val service: BloggerPostsResponseService
 ) {
 //    @GetMapping("/{email}/posts")
-    @GetMapping("/posts/{email}")
+    @GetMapping("/posts/users/{email}")
     fun getPosts(
         @PathVariable email: String,
         @RequestParam("since") since: String,
