@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.service.subscriptionService
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -47,6 +48,14 @@ class SubscriptionServiceImpl(
         request.setData().run { repository.findAllByCreatedAtLessThanAndBloggerOrderByCreatedAt(
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
             blogger) }
+
+    override fun subscriptions(since: String, pageSize: Int): List<Subscription> {
+        return repository.findAllByBloggerAndCreatedAtLessThanOrderByCreatedAt(
+            getPrincipal(),
+            LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+            PageRequest.of(0, pageSize)
+        )
+    }
 
     private fun getPrincipal(): User = SecurityContextHolder.getContext().authentication.principal as User
 
