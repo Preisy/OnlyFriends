@@ -8,7 +8,8 @@ import ru.onlyfriends.api.service.getBloggerPostsService.BloggerPostsResponseSer
 class BloggerPostsController(
     val service: BloggerPostsResponseService
 ) {
-    @GetMapping("/{email}/posts")
+//    @GetMapping("/{email}/posts")
+    @GetMapping("/posts/{email}")
     fun getPosts(
         @PathVariable email: String,
         @RequestParam("since") since: String,
