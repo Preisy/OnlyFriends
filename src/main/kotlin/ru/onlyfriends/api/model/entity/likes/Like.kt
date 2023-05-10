@@ -10,8 +10,8 @@ class Like (
     val user: User,
     likable: Likable
 ) : AbstractEntity() {
-    @Column(length = 255, nullable = true)
-    val targetType: String?
+    @Column(length = 255)
+    val targetType: String
     @Column
     val targetId: Long
 

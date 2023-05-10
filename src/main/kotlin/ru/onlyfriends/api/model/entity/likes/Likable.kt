@@ -5,9 +5,5 @@ interface Likable {
         POST("post"),
     }
     val type: ClassTypes
-
     val id: Long
-
-
-
 }

@@ -10,10 +10,10 @@ class LikeRequest(
     val likableClass: String,
     val id: Long
 ) : ApiRequest {
-    var author: User? = null
-    var likable: Likable? = null
+    lateinit var author: User
+    lateinit var likable: Likable
 
-    override fun asModel() = Like(author!!, likable!!)
+    override fun asModel() = Like(author, likable)
 
 
 }

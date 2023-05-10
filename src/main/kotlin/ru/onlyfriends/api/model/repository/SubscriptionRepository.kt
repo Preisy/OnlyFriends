@@ -16,8 +16,8 @@ interface SubscriptionRepository : CrudRepository<Subscription, Long> {
         blogger: User) : List<Subscription>
 
     fun findAllBySubscriber(subscriber: User): List<Subscription>
-    fun findAllByBloggerAndCreatedAtLessThanOrderByCreatedAt(
-        blogger: User,
+    fun findAllBySubscriberAndCreatedAtLessThanOrderByCreatedAt(
+        subscriber: User,
         createdAt: LocalDateTime,
         pageable: Pageable
     ): List<Subscription>

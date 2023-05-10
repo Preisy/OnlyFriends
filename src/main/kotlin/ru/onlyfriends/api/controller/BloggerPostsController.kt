@@ -4,12 +4,11 @@ import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
-@RequestMapping("/posts/users")
+@RequestMapping("/posts")
 class BloggerPostsController(
     val service: PostsResponseService
 ) {
-//    @GetMapping("/{email}/posts")
-    @GetMapping("/{email}")
+    @GetMapping("/users/{email}")
     fun getPosts(
         @PathVariable email: String,
         @RequestParam("since") since: String,

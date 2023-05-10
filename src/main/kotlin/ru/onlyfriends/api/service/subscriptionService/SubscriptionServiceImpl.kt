@@ -50,7 +50,7 @@ class SubscriptionServiceImpl(
             blogger) }
 
     override fun subscriptions(since: String, pageSize: Int): List<Subscription> {
-        return repository.findAllByBloggerAndCreatedAtLessThanOrderByCreatedAt(
+        return repository.findAllBySubscriberAndCreatedAtLessThanOrderByCreatedAt(
             getPrincipal(),
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
             PageRequest.of(0, pageSize)

@@ -26,7 +26,7 @@ class LikeServiceImpl(
     }
 
     fun findLikeEntity(request: LikeRequest): Like? =
-        request.setData().run { repository.findByUserAndTargetTypeAndTargetId(author!!, likableClass, id) }
+        request.setData().run { repository.findByUserAndTargetTypeAndTargetId(author, likableClass, id) }
 
     private fun LikeRequest.setData() = apply {
         author = getPrincipal()
@@ -53,7 +53,7 @@ class LikeServiceImpl(
         val pageable = PageRequest.of(0, pageSize)
         return repository.findAllByCreatedAtLessThanAndTargetTypeAndTargetId(
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-            request.likable?.type?.value ?: throw NotLikableException(),
+            request.likable.type.value,
             request.id,
             pageable
         )
@@ -65,7 +65,7 @@ class LikeServiceImpl(
     override fun countLikes(request: LikeRequest): Long {
         request.setData()
         return repository.countByTargetTypeAndTargetId(
-            request.likable?.type?.value ?: throw NotLikableException(),
+            request.likable.type.value,
             request.id
         )
     }

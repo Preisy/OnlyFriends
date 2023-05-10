@@ -16,8 +16,9 @@ class SubscriptionsPostsServiceImpl(
     val subscriptionRepository: SubscriptionRepository
 ) : SubscriptionsPostsService {
     override fun getPosts(since: String, pageSize: Int): List<Post> {
+        val bloggers = getBloggers().toMutableSet()
         return postRepository.findAllByAuthorInAndCreatedAtLessThanOrderByCreatedAt(
-            getBloggers().toMutableSet(),
+            bloggers,
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
             PageRequest.of(0, pageSize)
         )
