@@ -7,6 +7,8 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
+import org.springframework.data.annotation.Transient
+import ru.onlyfriends.api.model.entity.likes.Likable
 
 @Entity
 class Post(
@@ -16,4 +18,8 @@ class Post(
     val author: User,
     @Column(length = 255)
     var text: String
-) : AbstractEntity()
+) : AbstractEntity(), Likable {
+    @Transient
+    override val type = Likable.ClassTypes.POST
+
+}
