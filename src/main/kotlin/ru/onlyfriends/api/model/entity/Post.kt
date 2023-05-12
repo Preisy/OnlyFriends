@@ -17,6 +17,7 @@ class Post(
     val author: User,
     @Column(length = 255)
     var text: String
+    //TODO var like
 ) : AbstractEntity(), Likable {
     override val type get() = Likable.ClassTypes.POST  //should be with get or NullPointerException
                                                        // will be caught

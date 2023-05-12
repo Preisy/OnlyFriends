@@ -21,6 +21,7 @@ class SubscriptionServiceImpl(
         SubscriptionRequest, Subscription, Long, SubscriptionRepository
         >(), SubscriptionService {
 
+    //TODO return message(done or not done)
     override fun create(request: SubscriptionRequest) =
         request.setData().run {
             repository.findByBloggerAndSubscriber(blogger, subscriber)
@@ -32,6 +33,7 @@ class SubscriptionServiceImpl(
         blogger = userRepository.findByEmail(bloggerEmail).get()
     }
 
+    //TODO return message(done or not done)
     //TODO check for self subscripting
     override fun subscribe(request: SubscriptionRequest) = create(request)
 
@@ -41,6 +43,7 @@ class SubscriptionServiceImpl(
         request.setData().run { repository.deleteByBloggerAndSubscriber(blogger, subscriber) > 0 }
 
 
+    //TODO return Response class with "count" field
     override fun countSubscribers(request: SubscriptionRequest) =
         request.setData().run { repository.countByBlogger(blogger) }
 

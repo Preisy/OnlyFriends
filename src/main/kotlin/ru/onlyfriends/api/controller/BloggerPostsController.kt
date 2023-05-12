@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
+// TODO /users/{id}/posts
+// TODO make different services with
 @RequestMapping("/posts")
 class BloggerPostsController(
     val service: PostsResponseService

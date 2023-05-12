@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController
 import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
+//TODO rote to /subscriptions/posts
+//TODO subscritions -> followers
 @RequestMapping("/posts/subscriptions")
 class SubscriptionsPostsController(
     val service: PostsResponseService

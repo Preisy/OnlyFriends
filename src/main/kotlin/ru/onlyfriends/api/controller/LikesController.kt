@@ -5,6 +5,7 @@ import ru.onlyfriends.api.model.dto.request.LikeRequest
 import ru.onlyfriends.api.service.likeService.LikeService
 
 @RestController
+// TODO mapping /posts/{id}/likes
 @RequestMapping("/likes")
 class LikesController(
     val likeService: LikeService
