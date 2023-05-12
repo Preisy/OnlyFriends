@@ -7,6 +7,7 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
+import ru.onlyfriends.api.model.entity.likes.Likable
 
 @Entity
 class Post(
@@ -16,4 +17,9 @@ class Post(
     val author: User,
     @Column(length = 255)
     var text: String
-) : AbstractEntity()
+) : AbstractEntity(), Likable {
+    override val type get() = Likable.ClassTypes.POST  //should be with get or NullPointerException
+                                                       // will be caught
+
+
+}

@@ -7,7 +7,7 @@ import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.message.DeletedMessage
 import ru.onlyfriends.api.model.dto.request.PostRequest
 import ru.onlyfriends.api.model.entity.Post
-import ru.onlyfriends.api.service.userPostService.PostService
+import ru.onlyfriends.api.service.postService.userPostService.PostService
 
 @RestController
 @RequestMapping("/posts")

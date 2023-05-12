@@ -42,7 +42,7 @@ class SecurityConfig(
             .authorizeHttpRequests { auth -> auth
 //                .dispatcherTypeMatchers()
                     .requestMatchers("/health", "/login", "/signup").permitAll()
-                    .requestMatchers("/users").authenticated()
+                    .requestMatchers("/users", "/likes", "/posts").authenticated()
                     .requestMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated()
 
