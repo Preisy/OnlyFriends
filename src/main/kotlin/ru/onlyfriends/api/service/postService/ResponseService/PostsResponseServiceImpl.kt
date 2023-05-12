@@ -16,8 +16,8 @@ class PostsResponseServiceImpl(
     val subscriptionsPostsService: SubscriptionsPostsService,
     val likeRepository: LikeRepository
 ): PostsResponseService {
-    override fun getBloggerPosts(email: String, since: String, pageSize: Int): ResponseEntity<ApiResponse> {
-        val posts = service.getBloggerPosts(email, since, pageSize)
+    override fun getBloggerPosts(id: Long, since: String, pageSize: Int): ResponseEntity<ApiResponse> {
+        val posts = service.getBloggerPosts(id, since, pageSize)
         return PostsResponse(posts, getLikesNumber(posts)).asResponse()
     }
 

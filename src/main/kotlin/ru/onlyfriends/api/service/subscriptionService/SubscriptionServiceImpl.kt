@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import ru.onlyfriends.api.model.dto.request.SubscriptionRequest
+import ru.onlyfriends.api.model.dto.responses.MessageResponse
 import ru.onlyfriends.api.model.entity.Subscription
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.repository.SubscriptionRepository
@@ -30,7 +31,7 @@ class SubscriptionServiceImpl(
 
     fun SubscriptionRequest.setData() = this.apply {
         subscriber = getPrincipal()
-        blogger = userRepository.findByEmail(bloggerEmail).get()
+        blogger = userRepository.findById(bloggerId).get()
     }
 
     //TODO return message(done or not done)
@@ -40,12 +41,19 @@ class SubscriptionServiceImpl(
 
     @Transactional
     override fun unsubscribe(request: SubscriptionRequest) =
-        request.setData().run { repository.deleteByBloggerAndSubscriber(blogger, subscriber) > 0 }
+        request.setData().run {
+            object : MessageResponse("Unsubscribe") {
+                val unsubscribed =
+                    repository.deleteByBloggerAndSubscriber(blogger, subscriber) > 0
+            }
+        }
 
 
     //TODO return Response class with "count" field
     override fun countSubscribers(request: SubscriptionRequest) =
-        request.setData().run { repository.countByBlogger(blogger) }
+        object : MessageResponse("count subscribers") {
+            val number = request.setData().run { repository.countByBlogger(blogger) }
+        }
 
     override fun subscribers(request: SubscriptionRequest, since: String, pageSize: Int) =
         request.setData().run { repository.findAllByCreatedAtLessThanAndBloggerOrderByCreatedAt(

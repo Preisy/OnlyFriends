@@ -21,6 +21,7 @@ class Post(
 ) : AbstractEntity(), Likable {
     override val type get() = Likable.ClassTypes.POST  //should be with get or NullPointerException
                                                        // will be caught
+    
 
 
 }

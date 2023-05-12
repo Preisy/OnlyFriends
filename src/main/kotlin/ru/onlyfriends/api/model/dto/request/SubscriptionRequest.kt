@@ -4,7 +4,7 @@ import ru.onlyfriends.api.model.entity.Subscription
 import ru.onlyfriends.api.model.entity.User
 
 class SubscriptionRequest(
-    val bloggerEmail: String
+    val bloggerId: Long
 ) : ApiRequest {
     lateinit var subscriber: User
     lateinit var blogger: User

@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.controller
+package ru.onlyfriends.api.controller.me
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RestController
 import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
-//TODO rote to /subscriptions/posts
-//TODO subscritions -> followers
-@RequestMapping("/posts/subscriptions")
+@RequestMapping("me/subscriptions/posts")
 class SubscriptionsPostsController(
     val service: PostsResponseService
 ) {

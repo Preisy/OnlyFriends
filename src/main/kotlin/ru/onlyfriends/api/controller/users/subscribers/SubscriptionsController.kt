@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.controller
+package ru.onlyfriends.api.controller.users.subscribers
 
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -16,25 +16,25 @@ class SubscriptionsController(
     val subscriptionService: SubscriptionService
 ) {
 
-    @GetMapping("/{email}/followers")
-    fun getFollowers(
-        @PathVariable email: String,
+    @GetMapping("/{id}/subscribers")
+    fun getSubscribers(
+        @PathVariable id: Long,
         @RequestParam since: String,
         @RequestParam("page_size") pageSize: Int) =
         subscriptionService.subscribers(
-            SubscriptionRequest(email),
+            SubscriptionRequest(id),
             since,
             pageSize)
 
-    @PostMapping("/{email}/followers")
-    fun subscribe(@PathVariable email: String) =
-        subscriptionService.subscribe(SubscriptionRequest(email))
+    @PostMapping("/{id}/subscribers")
+    fun subscribe(@PathVariable id: Long) =
+        subscriptionService.subscribe(SubscriptionRequest(id))
 
-    @DeleteMapping("/{email}/followers")
-    fun unsubscribe(@PathVariable email: String) =
-        subscriptionService.unsubscribe(SubscriptionRequest(email))
+    @DeleteMapping("/{id}/subscribers")
+    fun unsubscribe(@PathVariable id: Long) =
+        subscriptionService.unsubscribe(SubscriptionRequest(id))
 
-    @GetMapping("/{email}/followers/count")
-    fun countSubscribers(@PathVariable email: String) =
-        subscriptionService.countSubscribers(SubscriptionRequest(email))
+    @GetMapping("/{id}/subscribers/count")
+    fun countSubscribers(@PathVariable id: Long) =
+        subscriptionService.countSubscribers(SubscriptionRequest(id))
 }
