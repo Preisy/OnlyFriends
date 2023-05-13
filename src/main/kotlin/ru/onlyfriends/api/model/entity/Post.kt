@@ -7,6 +7,9 @@ import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType
 import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+import ru.onlyfriends.api.model.entity.files.File
+import ru.onlyfriends.api.model.entity.files.WithFiles
 
 @Entity
 class Post(
@@ -15,5 +18,9 @@ class Post(
     @ManyToOne(fetch = FetchType.LAZY)
     val author: User,
     @Column(length = 255)
-    var text: String
-) : AbstractEntity()
+    var text: String,
+    @OneToMany
+    override val files: List<File>
+) : AbstractEntity(), WithFiles {
+
+}

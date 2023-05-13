@@ -8,22 +8,28 @@ import ru.onlyfriends.api.model.entity.Post
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.repository.PostRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
+import ru.onlyfriends.api.service.fileService.FileService
 
 @Service("PostService")
 class PostServiceImpl(
-    override val repository: PostRepository
+    override val repository: PostRepository,
+    val fileService: FileService
 ) : PostService, CrudServiceImpl<PostRequest, Post, Long, PostRepository>() {
 
+    fun PostRequest.fillWithFiles() {
+        fileService.fillWithFiles(this)
+    }
     override fun create(request: PostRequest): Post {
         val user = getPrincipal()
         request.author = user
+        request.fillWithFiles()
         return repository.save(request.asModel())
     }
 
     override fun put(postId: Long, postRequest: PostRequest): Post {
         return findById(postId).run {
             text = postRequest.text
-
+            postRequest.fillWithFiles()
             repository.save(this)
         }
     }

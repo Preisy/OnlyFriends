@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import ru.onlyfriends.api.model.dto.exception.NoFileException
 import ru.onlyfriends.api.model.dto.exception.ResourceNotFoundException
-import ru.onlyfriends.api.model.dto.request.FileRequest
-import ru.onlyfriends.api.model.entity.File
+import ru.onlyfriends.api.model.dto.request.UploadFileRequest
+import ru.onlyfriends.api.model.dto.request.WithFilesRequest
+import ru.onlyfriends.api.model.entity.files.File
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.repository.FileRepository
-import ru.onlyfriends.api.service.CrudServiceImpl
 import java.io.FileInputStream
 import java.io.InputStream
 import java.nio.file.Files
@@ -20,25 +20,23 @@ import java.nio.file.StandardCopyOption
 @Service
 class FileServiceImpl(
     override val repository: FileRepository
-) : FileService, CrudServiceImpl<FileRequest, File, Long, FileRepository>() {
-
-//    private val uploadsFolderPath: Path = Paths.get("/home/alex/Downloads/OnlyFriends")
+) : FileService {
 
     override fun canUserModeratePost(fileId: Long): Boolean {
         return try {
             val user = getPrincipal()
-            val post = findById(fileId)
+            val post = repository.findById(fileId).get()
             post.author.id == user.id
         } catch (e: ResourceNotFoundException) {
             false
         }
     }
 
-    override fun put(fileId: Long, fileRequest: FileRequest): File {
-        TODO()
+    override fun put(fileId: Long, uploadFileRequest: UploadFileRequest): File {
         val fileEntity = repository.getFileById(fileId) ?: throw NoFileException()
-        fileEntity.type = fileRequest.getExtension()
-        saveFile(fileEntity, fileRequest.file)
+        fileEntity.type = uploadFileRequest.getExtension()
+        saveFile(fileEntity, uploadFileRequest.file)
+        return fileEntity
     }
 
     override fun getFile(response: HttpServletResponse, id: Long) {
@@ -59,13 +57,21 @@ class FileServiceImpl(
         Files.copy(file.inputStream, fileEntity.getPath(), StandardCopyOption.REPLACE_EXISTING)
     }
 
-    override fun create(request: FileRequest): File {
+    override fun create(request: UploadFileRequest): File {
         val user = getPrincipal()
         request.author = user
         val fileAsModel = request.asModel()
         val fileModel = repository.save(fileAsModel) // to set id
         saveFile(fileModel, request.file)
         return fileModel
+    }
+
+    override fun fillWithFiles(request: WithFilesRequest) {
+        val files = mutableListOf<File>()
+        request.filesIds.forEach { id ->
+            repository.getFileById(id)?.let { files += it }
+        }
+        request.files = files
     }
 
     private fun getPrincipal(): User = SecurityContextHolder.getContext().authentication.principal as User
