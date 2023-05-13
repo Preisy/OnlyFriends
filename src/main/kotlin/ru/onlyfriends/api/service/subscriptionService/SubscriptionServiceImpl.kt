@@ -49,7 +49,6 @@ class SubscriptionServiceImpl(
         }
 
 
-    //TODO return Response class with "count" field
     override fun countSubscribers(request: SubscriptionRequest) =
         object : MessageResponse("count subscribers") {
             val number = request.setData().run { repository.countByBlogger(blogger) }
