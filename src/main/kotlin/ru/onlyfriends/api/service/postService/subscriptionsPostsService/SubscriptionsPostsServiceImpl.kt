@@ -24,6 +24,11 @@ class SubscriptionsPostsServiceImpl(
         )
     }
 
+    override fun getPosts(page: Int, pageSize: Int): List<Post> {
+        val bloggers = getBloggers().toMutableSet()
+        return postRepository.findAllByAuthorInOrderByCreatedAtDesc(bloggers, PageRequest.of(page, pageSize))
+    }
+
     fun getBloggers(): Set<User> {
         val subs = subscriptionRepository.findAllBySubscriber(getPrincipal())
         return subs.map { it.blogger }.toSet()

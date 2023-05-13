@@ -14,8 +14,6 @@ import ru.onlyfriends.api.model.entity.likes.Like
 import ru.onlyfriends.api.model.repository.LikeRepository
 import ru.onlyfriends.api.model.repository.PostRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Service
 class LikeServiceImpl(
@@ -52,14 +50,12 @@ class LikeServiceImpl(
         } ?: MessageResponse("Not found", HttpStatus.NOT_FOUND)
 
 
-    override fun getLikes(request: LikeRequest, since: String, pageSize: Int): List<Like> {
+    override fun getLikes(request: LikeRequest, page: Int, pageSize: Int): List<Like> {
         request.setData()
-        val pageable = PageRequest.of(0, pageSize)
-        return repository.findAllByCreatedAtLessThanAndTargetTypeAndTargetId(
-            LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
+        return repository.findAllByTargetTypeAndTargetIdOrderByCreatedAtDesc(
             request.likable.type.value,
             request.id,
-            pageable
+            PageRequest.of(page, pageSize)
         )
     }
 

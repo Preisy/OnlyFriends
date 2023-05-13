@@ -7,22 +7,24 @@ import ru.onlyfriends.api.model.dto.responses.PostsResponse
 import ru.onlyfriends.api.model.entity.Post
 import ru.onlyfriends.api.model.entity.likes.Likable
 import ru.onlyfriends.api.model.repository.LikeRepository
-import ru.onlyfriends.api.service.postService.getBloggerPostsService.BloggerPostsServiceImpl
+import ru.onlyfriends.api.service.postService.getBloggerPostsService.UsersPostsServiceImpl
 import ru.onlyfriends.api.service.postService.subscriptionsPostsService.SubscriptionsPostsService
 
 @Service
 class PostsResponseServiceImpl(
-    val service: BloggerPostsServiceImpl,
+    val service: UsersPostsServiceImpl,
     val subscriptionsPostsService: SubscriptionsPostsService,
-    val likeRepository: LikeRepository
+    val likeRepository: LikeRepository,
+//    val likeService: LikeService
 ): PostsResponseService {
-    override fun getBloggerPosts(id: Long, since: String, pageSize: Int): ResponseEntity<ApiResponse> {
-        val posts = service.getBloggerPosts(id, since, pageSize)
+    override fun getBloggerPosts(id: Long, page: Int, pageSize: Int): ResponseEntity<ApiResponse> {
+        val posts = service.getBloggerPosts(id, page, pageSize)
+//        val isLiked = posts.map {  }
         return PostsResponse(posts, getLikesNumber(posts)).asResponse()
     }
 
-    override fun getSubscriptionsPosts(since: String, pageSize: Int): ResponseEntity<ApiResponse> {
-        val posts = subscriptionsPostsService.getPosts(since, pageSize)
+    override fun getSubscriptionsPosts(page: Int, pageSize: Int): ResponseEntity<ApiResponse> {
+        val posts = subscriptionsPostsService.getPosts(page, pageSize)
         return PostsResponse(posts, getLikesNumber(posts)).asResponse()
     }
 

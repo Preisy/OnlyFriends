@@ -11,8 +11,8 @@ class UsersPostsController(
     @GetMapping("/users/{id}/posts")
     fun getPosts(
         @PathVariable id: Long,
-        @RequestParam("since") since: String,
+        @RequestParam("page") page: Int,
         @RequestParam("page_size") pageSize: Int) =
-        service.getBloggerPosts(id, since, pageSize)
+        service.getBloggerPosts(id, page, pageSize)
 
 }

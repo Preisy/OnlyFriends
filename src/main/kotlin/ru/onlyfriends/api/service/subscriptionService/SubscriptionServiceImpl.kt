@@ -11,8 +11,6 @@ import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.repository.SubscriptionRepository
 import ru.onlyfriends.api.model.repository.UserRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Service
 class SubscriptionServiceImpl(
@@ -54,16 +52,16 @@ class SubscriptionServiceImpl(
             val number = request.setData().run { repository.countByBlogger(blogger) }
         }
 
-    override fun subscribers(request: SubscriptionRequest, since: String, pageSize: Int) =
-        request.setData().run { repository.findAllByCreatedAtLessThanAndBloggerOrderByCreatedAt(
-            LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-            blogger) }
+    override fun subscribers(request: SubscriptionRequest, page: Int, pageSize: Int) =
+        request.setData().run { repository.findAllByBloggerOrderByCreatedAtDesc(
+            blogger,
+            PageRequest.of(page, pageSize)
+        ) }
 
-    override fun subscriptions(since: String, pageSize: Int): List<Subscription> {
-        return repository.findAllBySubscriberAndCreatedAtLessThanOrderByCreatedAt(
+    override fun subscriptions(page: Int, pageSize: Int): List<Subscription> {
+        return repository.findAllBySubscriberOrderByCreatedAtDesc(
             getPrincipal(),
-            LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
-            PageRequest.of(0, pageSize)
+            PageRequest.of(page, pageSize)
         )
     }
 

@@ -8,12 +8,12 @@ import ru.onlyfriends.api.service.subscriptionService.SubscriptionService
 
 @RestController
 @RequestMapping("/me")
-class SubscribersController(
+class MeSubscribtionsController(
     val subscriptionService: SubscriptionService
 ) {
     @GetMapping("/subscriptions")
     fun getSubscribers(
-        @RequestParam since: String,
-        @RequestParam("page_size") pageSize: Int) =
-        subscriptionService.subscriptions(since, pageSize)
+        @RequestParam("page") page: Int,
+        @RequestParam("page_size") pageSize: Int): List<Any> =
+        subscriptionService.subscriptions(page, pageSize)
 }

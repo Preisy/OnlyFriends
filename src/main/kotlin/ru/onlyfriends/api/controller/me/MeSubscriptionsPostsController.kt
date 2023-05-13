@@ -8,13 +8,13 @@ import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseServi
 
 @RestController
 @RequestMapping("me/subscriptions/posts")
-class SubscriptionsPostsController(
+class MeSubscriptionsPostsController(
     val service: PostsResponseService
 ) {
     @GetMapping
     fun getPosts(
-        @RequestParam("since") since: String,
+        @RequestParam("page") page: Int,
         @RequestParam("page_size") pageSize: Int) =
-        service.getSubscriptionsPosts(since, pageSize)
+        service.getSubscriptionsPosts(page, pageSize)
 
 }
