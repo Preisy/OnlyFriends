@@ -1,10 +1,13 @@
 package ru.onlyfriends.api.service.likeService
 
 import org.springframework.data.domain.PageRequest
+import org.springframework.http.HttpStatus
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
+import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.exception.NotLikableException
 import ru.onlyfriends.api.model.dto.request.LikeRequest
+import ru.onlyfriends.api.model.dto.responses.MessageResponse
 import ru.onlyfriends.api.model.entity.User
 import ru.onlyfriends.api.model.entity.likes.Likable
 import ru.onlyfriends.api.model.entity.likes.Like
@@ -26,7 +29,7 @@ class LikeServiceImpl(
     }
 
     fun findLikeEntity(request: LikeRequest): Like? =
-        request.setData().run { repository.findByUserAndTargetTypeAndTargetId(author, likableClass, id) }
+        request.setData().run { repository.findByUserAndTargetTypeAndTargetId(author, likableClass.value, id) }
 
     private fun LikeRequest.setData() = apply {
         author = getPrincipal()
@@ -35,7 +38,7 @@ class LikeServiceImpl(
 
     private fun LikeRequest.getRepo() =
         try {
-            when (Likable.ClassTypes.valueOf(likableClass)) {
+            when (likableClass) {
                 Likable.ClassTypes.POST -> postRepository
             }
         } catch (e: IllegalArgumentException) {
@@ -45,8 +48,9 @@ class LikeServiceImpl(
     override fun delete(request: LikeRequest) =
         findLikeEntity(request)?.let {
             repository.delete(it)
-            true
-        } ?: false
+            MessageResponse("Deleted")
+        } ?: MessageResponse("Not found", HttpStatus.NOT_FOUND)
+
 
     override fun getLikes(request: LikeRequest, since: String, pageSize: Int): List<Like> {
         request.setData()
@@ -62,17 +66,21 @@ class LikeServiceImpl(
     override fun setLike(request: LikeRequest) = create(request)
 
 
-    override fun countLikes(request: LikeRequest): Long {
+    override fun countLikes(request: LikeRequest): ApiResponse {
         request.setData()
-        return repository.countByTargetTypeAndTargetId(
+        val number =  repository.countByTargetTypeAndTargetId(
             request.likable.type.value,
             request.id
         )
+        return object : MessageResponse("Likes count") {
+            val number = number
+        }
     }
 
     override fun isLiked(request: LikeRequest) =
-        findLikeEntity(request) != null
-
+        object : MessageResponse("is liked") {
+            val liked = findLikeEntity(request)?.let {true} ?: false
+        }
 
     private fun getPrincipal(): User = SecurityContextHolder.getContext().authentication.principal as User
 

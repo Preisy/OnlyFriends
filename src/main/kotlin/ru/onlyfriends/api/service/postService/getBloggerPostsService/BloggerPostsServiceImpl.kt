@@ -13,9 +13,9 @@ class BloggerPostsServiceImpl(
     val userRepository: UserRepository
 ) : BloggerPostsService {
 
-    override fun getBloggerPosts(email: String, since: String, pageSize: Int) =
+    override fun getBloggerPosts(id: Long, since: String, pageSize: Int) =
         repository.findAllByAuthorAndCreatedAtLessThanOrderByCreatedAt(
-            userRepository.findByEmail(email).get(),
+            userRepository.findById(id).get(),
             LocalDateTime.parse(since, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),
             PageRequest.of(0, pageSize)
             )

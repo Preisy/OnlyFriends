@@ -1,18 +1,18 @@
-package ru.onlyfriends.api.controller
+package ru.onlyfriends.api.controller.users.posts
 
 import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseService
 
 @RestController
-@RequestMapping("/posts")
-class BloggerPostsController(
+// TODO make different services with
+class UsersPostsController(
     val service: PostsResponseService
 ) {
-    @GetMapping("/users/{email}")
+    @GetMapping("/users/{id}/posts")
     fun getPosts(
-        @PathVariable email: String,
+        @PathVariable id: Long,
         @RequestParam("since") since: String,
         @RequestParam("page_size") pageSize: Int) =
-        service.getBloggerPosts(email, since, pageSize)
+        service.getBloggerPosts(id, since, pageSize)
 
 }

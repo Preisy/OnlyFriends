@@ -1,4 +1,4 @@
-package ru.onlyfriends.api.controller
+package ru.onlyfriends.api.controller.users
 
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize

@@ -7,7 +7,7 @@ import ru.onlyfriends.api.model.entity.likes.Like
 
 class LikeRequest(
     @JsonProperty("likable_class")
-    val likableClass: String,
+    val likableClass: Likable.ClassTypes,
     val id: Long
 ) : ApiRequest {
     lateinit var author: User
