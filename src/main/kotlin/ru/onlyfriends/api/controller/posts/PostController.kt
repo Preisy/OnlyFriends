@@ -41,11 +41,4 @@ class PostController(
         @RequestBody postRequest: PostRequest
     ): Post = postService.put(postId, postRequest)
 
-    @PostMapping("{id}/like")
-    fun like(
-        @PathVariable id: Long,
-    ): ResponseEntity<ApiResponse> {
-        postService.like(id)
-        return SuccessfullyLikedMessage().asResponse()
-    }
 }

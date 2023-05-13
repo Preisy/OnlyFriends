@@ -17,5 +17,4 @@ class Post(
     val author: User,
     @Column(length = 255)
     var text: String
-    //TODO var like
 ) : Likable()

@@ -2,35 +2,17 @@ package ru.onlyfriends.api.service.postService.userPostService
 
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
-import ru.onlyfriends.api.model.dto.exception.AlreadyLikedException
 import ru.onlyfriends.api.model.dto.exception.ResourceNotFoundException
 import ru.onlyfriends.api.model.dto.request.PostRequest
 import ru.onlyfriends.api.model.entity.Post
 import ru.onlyfriends.api.model.entity.User
-import ru.onlyfriends.api.model.entity.like.Like
-import ru.onlyfriends.api.model.repository.LikeRepository
 import ru.onlyfriends.api.model.repository.PostRepository
-import ru.onlyfriends.api.model.repository.UserRepository
 import ru.onlyfriends.api.service.CrudServiceImpl
-import ru.onlyfriends.api.utils.isNotEmpty
 
 @Service("PostService")
 class PostServiceImpl(
     override val repository: PostRepository,
-    private val userRepository: UserRepository,
-    private val likeRepository: LikeRepository
 ) : PostService, CrudServiceImpl<PostRequest, Post, Long, PostRepository>() {
-
-    override fun like(id: Long) {
-        val post = findById(id)
-        val principal = getPrincipal()
-        val user = userRepository.findById(principal.id).orElseThrow()
-        post.likes.find { it.user.id == principal.id }.isNotEmpty { throw AlreadyLikedException() }
-        val like = Like(user, post)
-        post.likes.add(like)
-        repository.save(post)
-        likeRepository.save(like)
-    }
 
     override fun create(request: PostRequest): Post {
         val user = getPrincipal()
