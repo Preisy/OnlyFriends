@@ -13,6 +13,8 @@ import ru.onlyfriends.api.configuration.security.RoleHierarchy
 class User(
     @Column(length = 255, nullable = false)
     var email: String,
+    @Column(length = 255, nullable = false)
+    val nickname: String,
     @Column(name = "password", length = 255, nullable = false)
     var uPassword: String,
 
