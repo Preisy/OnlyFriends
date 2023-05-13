@@ -8,7 +8,7 @@ import ru.onlyfriends.api.service.subscriptionService.SubscriptionService
 
 @RestController
 @RequestMapping("/me")
-class SubscribersController(
+class MeSubscribtionsController(
     val subscriptionService: SubscriptionService
 ) {
     @GetMapping("/subscriptions")

@@ -6,10 +6,10 @@ import ru.onlyfriends.api.model.repository.PostRepository
 import ru.onlyfriends.api.model.repository.UserRepository
 
 @Service
-class BloggerPostsServiceImpl(
+class UsersPostsServiceImpl(
     val repository: PostRepository,
     val userRepository: UserRepository
-) : BloggerPostsService {
+) : UsersPostsService {
 
     override fun getBloggerPosts(id: Long, page: Int, pageSize: Int) =
         repository.findAllByAuthorOrderByCreatedAtDesc(

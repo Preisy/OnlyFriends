@@ -8,7 +8,7 @@ import ru.onlyfriends.api.service.postService.ResponseService.PostsResponseServi
 
 @RestController
 @RequestMapping("me/subscriptions/posts")
-class SubscriptionsPostsController(
+class MeSubscriptionsPostsController(
     val service: PostsResponseService
 ) {
     @GetMapping

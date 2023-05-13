@@ -12,7 +12,7 @@ import ru.onlyfriends.api.service.subscriptionService.SubscriptionService
 
 @RestController
 @RequestMapping("/users")
-class SubscriptionsController(
+class UsersSubscriptionsController(
     val subscriptionService: SubscriptionService
 ) {
 

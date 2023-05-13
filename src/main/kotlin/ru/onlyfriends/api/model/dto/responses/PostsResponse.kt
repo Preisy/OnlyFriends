@@ -9,17 +9,19 @@ import java.time.LocalDateTime
 
 class PostsResponse(
     posts: List<Post>,
-    likesNumber: List<Long>
+    likesNumber: List<Long>,
+//    isLiked: List<Boolean>
 ) : ApiResponse {
     override val status = HttpStatus.OK
     override val message = "Posts"
     override val timestamp: LocalDateTime = LocalDateTime.now()
-    val posts: List<PostResponse>
+    private val posts: List<PostResponse>
     init {
         this.posts = List(posts.size) {
             PostResponse(
                 posts[it],
-                likesNumber[it]
+                likesNumber[it],
+//                isLiked[it],
             )
         }
     }
@@ -28,6 +30,8 @@ class PostsResponse(
         @JsonSerialize
         val post: Post,
         @JsonProperty("likes_number")
-        val likesNumber: Long
+        val likesNumber: Long,
+//        @JsonProperty("is_liked")
+//        val isLiked: Boolean
     )
 }
