@@ -21,9 +21,9 @@ class LikesController(
     @GetMapping("/{id}/likes")
     fun getLikes(
         @PathVariable id: Long,
-        @RequestParam("since") since: String,
-        @RequestParam("page_size") pageSize: Int) =
-        likeService.getLikes(LikeRequest(Likable.ClassTypes.POST, id), since, pageSize)
+        @RequestParam("page") page: Int,
+        @RequestParam("page_size") pageSize: Int): List<Any> =
+        likeService.getLikes(LikeRequest(Likable.ClassTypes.POST, id), page, pageSize)
 
     @GetMapping("/{id}/likes/is_liked")
     fun isLiked(@PathVariable id: Long) =

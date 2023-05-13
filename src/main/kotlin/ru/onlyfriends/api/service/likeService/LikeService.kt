@@ -8,7 +8,7 @@ import ru.onlyfriends.api.service.CrudService
 interface LikeService : CrudService<LikeRequest, Like, Long> {
     fun isLiked(request: LikeRequest): ApiResponse
     fun delete(request: LikeRequest): ApiResponse
-    fun getLikes(request: LikeRequest, since: String, pageSize: Int): List<Like>
+    fun getLikes(request: LikeRequest, page: Int, pageSize: Int): List<Like>
     fun setLike(request: LikeRequest): Like
     fun countLikes(request: LikeRequest): ApiResponse
 

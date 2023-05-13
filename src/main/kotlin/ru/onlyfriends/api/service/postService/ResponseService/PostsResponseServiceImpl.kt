@@ -16,13 +16,13 @@ class PostsResponseServiceImpl(
     val subscriptionsPostsService: SubscriptionsPostsService,
     val likeRepository: LikeRepository
 ): PostsResponseService {
-    override fun getBloggerPosts(id: Long, since: String, pageSize: Int): ResponseEntity<ApiResponse> {
-        val posts = service.getBloggerPosts(id, since, pageSize)
+    override fun getBloggerPosts(id: Long, page: Int, pageSize: Int): ResponseEntity<ApiResponse> {
+        val posts = service.getBloggerPosts(id, page, pageSize)
         return PostsResponse(posts, getLikesNumber(posts)).asResponse()
     }
 
-    override fun getSubscriptionsPosts(since: String, pageSize: Int): ResponseEntity<ApiResponse> {
-        val posts = subscriptionsPostsService.getPosts(since, pageSize)
+    override fun getSubscriptionsPosts(page: Int, pageSize: Int): ResponseEntity<ApiResponse> {
+        val posts = subscriptionsPostsService.getPosts(page, pageSize)
         return PostsResponse(posts, getLikesNumber(posts)).asResponse()
     }
 

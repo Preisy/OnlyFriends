@@ -13,8 +13,8 @@ class SubscriptionsPostsController(
 ) {
     @GetMapping
     fun getPosts(
-        @RequestParam("since") since: String,
+        @RequestParam("page") page: Int,
         @RequestParam("page_size") pageSize: Int) =
-        service.getSubscriptionsPosts(since, pageSize)
+        service.getSubscriptionsPosts(page, pageSize)
 
 }

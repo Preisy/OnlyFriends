@@ -10,6 +10,6 @@ interface SubscriptionService : CrudService<SubscriptionRequest, Subscription, L
     fun subscribe(request: SubscriptionRequest): Subscription
     fun unsubscribe(request: SubscriptionRequest): MessageResponse
     fun countSubscribers(request: SubscriptionRequest): ApiResponse
-    fun subscribers(request: SubscriptionRequest, since: String, pageSize: Int): List<Subscription>
-    fun subscriptions(since: String, pageSize: Int): List<Subscription>
+    fun subscribers(request: SubscriptionRequest, page: Int, pageSize: Int): List<Subscription>
+    fun subscriptions(page: Int, pageSize: Int): List<Subscription>
 }

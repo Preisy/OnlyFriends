@@ -19,11 +19,11 @@ class SubscriptionsController(
     @GetMapping("/{id}/subscribers")
     fun getSubscribers(
         @PathVariable id: Long,
-        @RequestParam since: String,
-        @RequestParam("page_size") pageSize: Int) =
+        @RequestParam page: Int,
+        @RequestParam("page_size") pageSize: Int): List<Any> =
         subscriptionService.subscribers(
             SubscriptionRequest(id),
-            since,
+            page,
             pageSize)
 
     @PostMapping("/{id}/subscribers")
