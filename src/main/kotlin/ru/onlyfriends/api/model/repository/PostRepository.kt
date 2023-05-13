@@ -12,7 +12,8 @@ import java.time.LocalDateTime
 interface PostRepository : CrudRepository<Post, Long> {
     fun findAllByAuthorOrderByCreatedAtDesc(
         author: User,
-        pageable: Pageable) : List<Post>
+        pageable: Pageable
+    ): List<Post>
 
     fun findAllByAuthorInAndCreatedAtLessThanOrderByCreatedAt(
         author: MutableCollection<User>,

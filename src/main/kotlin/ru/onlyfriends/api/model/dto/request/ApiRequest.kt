@@ -1,7 +1,7 @@
 package ru.onlyfriends.api.model.dto.request
 
-import ru.onlyfriends.api.model.entity.AbstractEntity
+import ru.onlyfriends.api.model.entity.ApiEntity
 
 interface ApiRequest {
-    fun asModel(): AbstractEntity
+    fun asModel(): ApiEntity
 }

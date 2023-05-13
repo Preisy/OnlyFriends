@@ -5,6 +5,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.message.DeletedMessage
+import ru.onlyfriends.api.model.dto.message.SuccessfullyLikedMessage
 import ru.onlyfriends.api.model.dto.request.PostRequest
 import ru.onlyfriends.api.model.entity.Post
 import ru.onlyfriends.api.service.postService.userPostService.PostService
@@ -39,4 +40,12 @@ class PostController(
         @PathVariable postId: Long,
         @RequestBody postRequest: PostRequest
     ): Post = postService.put(postId, postRequest)
+
+    @PostMapping("{id}/like")
+    fun like(
+        @PathVariable id: Long,
+    ): ResponseEntity<ApiResponse> {
+        postService.like(id)
+        return SuccessfullyLikedMessage().asResponse()
+    }
 }

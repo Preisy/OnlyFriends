@@ -4,11 +4,12 @@ import org.springframework.data.repository.CrudRepository
 import ru.onlyfriends.api.model.dto.exception.ResourceNotFoundException
 import ru.onlyfriends.api.model.dto.request.ApiRequest
 import ru.onlyfriends.api.model.entity.AbstractEntity
+import ru.onlyfriends.api.model.entity.ApiEntity
 import ru.onlyfriends.api.service.exception.NotCorrespondingToModel
 
 abstract class CrudServiceImpl<
         Request : ApiRequest,
-        Model : AbstractEntity,
+        Model : ApiEntity,
         Id : Any,
         Repository : CrudRepository<Model, Id>>(
     protected val modelSimpleName: String? = null,

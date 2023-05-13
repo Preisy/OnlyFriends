@@ -5,12 +5,11 @@ import java.io.Serializable
 import java.time.LocalDateTime
 
 @MappedSuperclass
-abstract class AbstractEntity : Serializable {
+abstract class AbstractEntity : Serializable, ApiEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
-        private set
+    override val id: Long = 0
 
     @Column(nullable = false, updatable = false)
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    override val createdAt: LocalDateTime = LocalDateTime.now()
 }
