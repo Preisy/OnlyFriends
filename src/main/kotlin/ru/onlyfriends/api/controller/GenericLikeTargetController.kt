@@ -2,10 +2,7 @@ package ru.onlyfriends.api.controller
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
 import ru.onlyfriends.api.model.dto.ApiResponse
 import ru.onlyfriends.api.model.dto.message.DeletedMessage
 import ru.onlyfriends.api.model.dto.message.SuccessfullyLikedMessage
@@ -29,9 +26,11 @@ abstract class GenericLikeTargetController<Target : Likable, TargetId : Any>(
         return SuccessfullyLikedMessage().asResponse()
     }
     @GetMapping("/{id}/likes")
-    fun getAllLikes(
+    fun getLikes(
         @PathVariable id: TargetId,
-    ) = likeService.getAllLikes(id)
+        @RequestParam("page") page: Int,
+        @RequestParam("page_size") pageSize: Int
+    ) = likeService.getLikes(id, page, pageSize)
 
     @DeleteMapping("/{id}/likes")
     fun deleteMyLike(

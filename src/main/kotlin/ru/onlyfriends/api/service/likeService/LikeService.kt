@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.service.likeService
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.CrudRepository
 import org.springframework.security.core.context.SecurityContextHolder
 import ru.onlyfriends.api.model.dto.exception.AlreadyLikedException
@@ -17,7 +18,10 @@ class LikeService<Target : Likable, TargetId : Any>(
     private val targetRepository: CrudRepository<Target, TargetId>
 ) {
 
-    fun getAllLikes(id: TargetId): Iterable<Like> = findTargetById(id).likes
+    fun getLikes(id: TargetId, page: Int, pageSize: Int): List<Like> {
+        val target = findTargetById(id)
+        return likeRepository.findByTargetOrderByCreatedAtDesc(target, PageRequest.of(page, pageSize))
+    }
 
     fun like(id: TargetId) {
         val target = findTargetById(id)
