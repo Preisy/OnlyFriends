@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import ru.onlyfriends.api.configuration.security.RoleHierarchy
+import ru.onlyfriends.api.model.entity.files.File
+import ru.onlyfriends.api.model.entity.files.WithFile
 
 
 @Entity
@@ -25,8 +27,8 @@ class User(
     @JsonIdentityReference(alwaysAsId = true)
     @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    val roles: MutableSet<UserRole> = mutableSetOf(UserRole(UserRoleType.USER))
-) : AbstractEntity(), UserDetails {
+    val roles: MutableSet<UserRole> = mutableSetOf(UserRole(UserRoleType.USER)),
+) : AbstractEntity(), UserDetails, WithFile {
 
     @JsonIgnore
     @OneToMany(mappedBy = "author", cascade = [CascadeType.REMOVE], orphanRemoval = true, fetch = FetchType.LAZY)
@@ -72,4 +74,7 @@ class User(
 
     @JsonIgnore
     override fun isEnabled() = true
+
+    @OneToOne
+    override var file: File? = null
 }

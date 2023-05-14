@@ -3,7 +3,7 @@ package ru.onlyfriends.api.model.entity.files
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
-import jakarta.persistence.OneToOne
+import jakarta.persistence.ManyToOne
 import ru.onlyfriends.api.model.entity.AbstractEntity
 import ru.onlyfriends.api.model.entity.User
 import java.nio.file.Path
@@ -17,7 +17,7 @@ class File (
 //    @JsonIgnore
     var type: String,
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
     val author: User,
 ) : AbstractEntity() {
