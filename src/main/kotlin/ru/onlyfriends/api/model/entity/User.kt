@@ -75,6 +75,7 @@ class User(
     @JsonIgnore
     override fun isEnabled() = true
 
+    @JsonProperty("profile_picture")
     @OneToOne
     override var file: File? = null
 }
