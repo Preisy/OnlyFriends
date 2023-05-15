@@ -16,7 +16,7 @@ class User(
     @Column(length = 255, nullable = false)
     var email: String,
     @Column(length = 255, nullable = false)
-    val nickname: String,
+    var nickname: String,
     @Column(name = "password", length = 255, nullable = false)
     var uPassword: String,
 

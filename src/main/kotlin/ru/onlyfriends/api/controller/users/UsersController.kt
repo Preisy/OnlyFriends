@@ -28,4 +28,10 @@ class UsersController(
         return DeletedMessage().asResponse()
     }
 
+    @GetMapping("/all_by_nickname/{nickname}")
+    fun getUsersByPartialNickname(
+        @RequestParam("page") page: Int,
+        @RequestParam("page_size") pageSize: Int,
+        @PathVariable nickname: String) =
+        userService.findByPartialNickname(nickname, page, pageSize)
 }

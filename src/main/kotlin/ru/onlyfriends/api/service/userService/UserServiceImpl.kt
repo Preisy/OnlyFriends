@@ -1,5 +1,6 @@
 package ru.onlyfriends.api.service.userService
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
@@ -26,6 +27,13 @@ class UserServiceImpl(
     override fun findByLogin(login: String): User = repository.findByEmail(login).orElseThrow {
         ResourceNotFoundException(modelSimpleName!!)
     }
+
+    override fun findByPartialNickname(partialNickname: String, page: Int, pageSize: Int): List<User> =
+        repository.findAllByNicknameContainingOrderByNickname(
+            partialNickname,
+            PageRequest.of(page, pageSize)
+        )
+
 
     override fun loadUserByUsername(login: String): UserDetails {
         return findByLogin(login)
